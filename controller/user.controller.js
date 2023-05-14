@@ -36,14 +36,14 @@ loginUser = async (req, res) => {
             .status(200)
             .send({ msg: "Login successful", token, firstName: user.firstName });
         } else {
-          res.status(200).send({ err: "wrong Credeantials" });
+          res.status(400).send({ err: "wrong Credeantials" });
         }
       });
     } catch (err) {
       res.status(400).send({ err: err.message });
     }
   } else {
-    res.status(200).send({ msg: "Please signup first" });
+    res.status(400).send({ msg: "Please signup first" });
   }
 };
 
