@@ -5,15 +5,15 @@ const bcrypt = require("bcrypt");
 let jwt = require("jsonwebtoken");
 
 let registerUser = async (req, res) => {
-  let { name, email, password } = req.body;
+  let { firstName,lastName, email, password } = req.body;
   let check = await UserModel.findOne({ email });
   if (check) {
-    res.status(200).send({ msg: "usr is already exists" });
+    res.status(200).send({ msg: "user is already exists" });
   } else {
     try {
       bcrypt.hash(password, 5, async (err, hash) => {
         if (hash) {
-          let user = new UserModel({ name, email, password: hash });
+          let user = new UserModel({ firstName,lastName, email, password: hash });
           await user.save();
           res.status(200).send({ msg: "user has been created" });
         }
@@ -31,10 +31,10 @@ loginUser = async (req, res) => {
     try {
       bcrypt.compare(password, user.password, function (err, result) {
         if (result) {
-          let token = jwt.sign({ author: user.name }, "masai");
+          let token = jwt.sign({ author: user.firstName }, "masai");
           res
             .status(200)
-            .send({ msg: "Login successful", token, name: user.name });
+            .send({ msg: "Login successful", token, name: user.firstName });
         } else {
           res.status(200).send({ err: "wrong Credeantials" });
         }
