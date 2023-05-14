@@ -34,7 +34,7 @@ loginUser = async (req, res) => {
           let token = jwt.sign({ author: user.firstName }, "masai");
           res
             .status(200)
-            .send({ msg: "Login successful", token, name: user.firstName });
+            .send({ msg: "Login successful", token, firstName: user.firstName });
         } else {
           res.status(200).send({ err: "wrong Credeantials" });
         }
